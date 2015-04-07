@@ -1,16 +1,14 @@
 [user]
-	name = Nicolas Yuste
-	email = info@nicoyuste.es
+	name = Vivek Raju Muppalla
+	email = vmuppalla@groupon.com
 [core]
-	excludesfile = ~/.gitignore_global
+	excludesfile = /Users/vmuppalla/.gitignore_global
+	editor = /usr/bin/vim
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
-[alias]
-  s = status -sb
-  br = branch
-  co = checkout
-  glog = log --graph --decorate --pretty=oneline --abbrev-commit --all
+[color]
+	ui = true

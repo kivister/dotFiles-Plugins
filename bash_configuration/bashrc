@@ -1,39 +1,90 @@
 
-function ListAllCommands
-{
-    COMMANDS=`echo -n $PATH | xargs -d : -I {} find {} -maxdepth 1 \
-        -executable -type f -printf '%P\n'`
-    ALIASES=`alias | cut -d '=' -f 1`
-    echo "$COMMANDS"$'\n'"$ALIASES" | sort -u
-}
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH=$PATH:/Users/vmuppalla/Projects/Hackathon/play-2.1.2 #Adding Play
+PATH=$PATH:/usr/local/sbin
+PATH=$PATH:/Users/vmuppalla/Projects/phabricator/arcanist/bin
+PATH=$PATH:/Users/vmuppalla/Projects/activator/activator-1.2.2-minimal
+PATH=$PATH:/usr/local/share/python
+export RUBY_HEAP_MIN_SLOTS=500000
+export RUBY_HEAP_SLOTS_INCREMENT=250000
+export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+export RUBY_GC_MALLOC_LIMIT=50000000
+export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+export MERCHANTDATA_ENV=staging
+
+source /Users/vmuppalla/Projects/phabricator/arcanist/resources/shell/bash-completion
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/heroku/bin:$PATH"
+export OPENGROK_TOMCAT_BASE=/Users/vmuppalla/Projects/open-grok/apache-tomcat-7.0.35
+export JAVA_HOME=$(/usr/libexec/java_home)
+#export JAVA_HOME=/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home
+#user defined alias
+alias ctags="cd /Users/vmuppalla/Projects/open-grok/ctags-5.8"
+alias openg="cd /Users/vmuppalla/Projects/open-grok/opengrok-0.11.1"
+alias tomcat="cd /Users/vmuppalla/Projects/open-grok/apache-tomcat-7.0.35"
+alias pwa="cd /Users/vmuppalla/Projects/groupon/groupon/"
+alias travel='cd /Users/vmuppalla/Projects/groupon/travel/'
+alias order='cd /Users/vmuppalla/Projects/groupon/order/'
+alias itchy='cd /Users/vmuppalla/Projects/groupon/itchy/itchy/'
+alias sample='cd /Users/vmuppalla/Projects/rails_projects/sample_app/'
+alias travelc='cd /Users/vmuppalla/Projects/groupon/travel-config/'
+alias content='cd /Users/vmuppalla/Projects/groupon/travel-content/'
+alias geo='cd /Users/vmuppalla/Projects/groupon/travel-geo/'
+alias torch='cd /Users/vmuppalla/Projects/groupon/torch/'
+alias db='cd /Users/vmuppalla/Projects/groupon/dashboard/'
+alias gs='git status '
+alias ga='git add '
+alias gb='git branch '
+alias gc='git commit '
+alias gd='git diff --staged'
+alias go='git checkout '
+alias gk='gitk --all&'
+alias gx='gitx --all'
+alias gp='git pull '
+alias gpu='git push '
+alias eclipse='open -n /Applications/Eclipse\ alias'
+alias metrics='cd /Users/vmuppalla/Projects/groupon/metrics/'
+
+export MAVEN_OPTS="-Xms512m -Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=512m -ea -Duser.timezone=UTC"
+
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
 
 function parse_git_branch {
-  local ref=$(git symbolic-ref HEAD 2> /dev/null)
-  if [[ -n $ref ]]; then
-    echo `expr "$ref" : 'refs/heads/\(.*\)'`
-  fi
-}
- 
-parse_svn_branch() {
-  parse_svn_url | sed -e 's#^'"$(parse_svn_repository_root)"'##g' | awk '{print $1 }'
-}
- 
-parse_svn_url() {
-  svn info 2>/dev/null | sed -ne 's#^URL: ##p'
-}
- 
-parse_svn_repository_root() {
-  svn info 2>/dev/null | sed -ne 's#^Repository Root: ##p'
-}
- 
-BLACK="\[\033[0;38m\]"
-RED="\[\033[0;31m\]"
-RED_BOLD="\[\033[01;31m\]"
-BLUE="\[\033[01;34m\]"
-GREEN="\[\033[0;32m\]"
- 
-export PS1="$BLACK\u@$GREEN\h$BLACK:\w$RED[\$(parse_git_branch)\$(parse_svn_branch)]$BLACK$ "
 
-alias s='git status'
+        git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \[\1\]/'
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+}
+
+function proml {
+
+  local        RED="\[\033[0;31m\]"
+
+# OPTIONAL - if you want to use any of these other colors:
+
+  local        BLUE="\[\033[0;34m\]"
+
+  local         RED="\[\033[0;31m\]"
+
+  local   LIGHT_RED="\[\033[1;31m\]"
+
+  local       GREEN="\[\033[0;32m\]"
+
+  local LIGHT_GREEN="\[\033[1;32m\]"
+
+  local       WHITE="\[\033[1;37m\]"
+
+  local  LIGHT_GRAY="\[\033[0;37m\]"
+
+# END OPTIONAL
+
+  local     DEFAULT="\[\033[0m\]"
+
+PS1="\h:\W \u$GREEN\$(parse_git_branch) $DEFAULT\$"
+
+}
+
+proml
